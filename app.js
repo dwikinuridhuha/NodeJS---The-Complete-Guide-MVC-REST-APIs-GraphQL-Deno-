@@ -1,7 +1,8 @@
 import { createServer } from "http";
 
 const server = createServer(function (req, res) {
-  console.log(req.url, req.method, req.headers);
+  const { headers, url, method } = req;
+  console.log({ headers, url, method });
 });
 
 server.listen(3000);
