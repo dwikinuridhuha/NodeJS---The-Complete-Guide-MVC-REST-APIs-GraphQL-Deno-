@@ -1,4 +1,5 @@
 import { createServer } from "http";
+import { writeFileSync } from "fs";
 
 const server = createServer(function (req, res) {
   const { headers, url, method } = req;
@@ -12,6 +13,13 @@ const server = createServer(function (req, res) {
       "<body><form action='/message' method='post'><input type='text' name='message'></input><button type='submit'>Send</button></form></body>",
     );
     res.write("</html>");
+    res.end();
+    return;
+  }
+  if (url === "/message" && method === "POST") {
+    writeFileSync("message.txt", "Hello World!");
+    res.statusCode = 302;
+    res.setHeader("Location", "/");
     res.end();
     return;
   }
