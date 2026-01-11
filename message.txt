@@ -1,1 +1,1 @@
-message=Ini+Pesan
+message=welcome+drink

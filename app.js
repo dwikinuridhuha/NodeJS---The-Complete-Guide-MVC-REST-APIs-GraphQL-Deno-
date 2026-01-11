@@ -1,5 +1,5 @@
 import { createServer } from "http";
-import { writeFileSync } from "fs";
+import { writeFile } from "fs";
 
 const server = createServer(function (req, res) {
   const { headers, url, method } = req;
@@ -26,12 +26,12 @@ const server = createServer(function (req, res) {
     req.on("end", () => {
       const parserBody = Buffer.concat(body).toString();
       console.log(parserBody);
-      writeFileSync("message.txt", parserBody);
+      writeFile("message.txt", parserBody, (err) => {
+        res.statusCode = 302;
+        res.setHeader("Location", "/");
+        return res.end();
+      });
     });
-    res.statusCode = 302;
-    res.setHeader("Location", "/");
-    res.end();
-    return;
   }
 
   res.setHeader("Content-Type", "text/html");
